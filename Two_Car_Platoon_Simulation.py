@@ -67,7 +67,7 @@ def adaptive1(x1,t):
 
 x10 = [ehat[7], 50.0]
 t_range = 10
-t = np.arange(0.0, t_range, 0.1)
+t = np.arange(0.0, t_range, 0.01)
 
 #Initializing and defining velocity and position data
 nd          = 200                       #nominal distance to be maintained in mm
@@ -75,7 +75,7 @@ v1          = 300                       #velocity of vehicle 1 in mm/sec
 del_x1      = np.arange(0.0,t_range)    #Initializing actual distance in mm
 vcap1       = np.arange(0.0,t_range)    #Initializing velocity estimate vcap in mm/sec
 v2          = np.arange(0.0,t_range)    #Initializing input velocity v2 in mm/sec
-k_v         = 4                         #feedback gain
+k_v         = 1                         #feedback gain
 
 #Solving the state space model using ODEint
 x1 = odeint(adaptive1, x10, t)
@@ -92,7 +92,8 @@ plot.figure()
 plot.plot(z,'k+',label='noisy measurements')
 plot.plot(ehat,'b-',label='a posteri estimate')
 plot.axhline(e,color='g',label='truth value')
-plot.plot(ehat[7],'r*',label= 'chosen estimate value')
+plot.plot(ehat[5],'r*',label= 'chosen estimate value')
+plot.grid(color='k', linestyle='-', linewidth=0.3)
 plot.legend()
 plot.title('Estimate vs. iteration step', fontweight='bold')
 plot.xlabel('Iteration')
@@ -102,6 +103,7 @@ plot.figure()
 plot.plot(x1[:,1],'r-', label = 'Velocity estimate error for car 2')
 plot.plot(x1[:,0],'b-', label = 'Distance error')
 plot.title('Velocity estimate error and Distance error')
+plot.grid(color='k', linestyle='-', linewidth=0.3)
 plot.legend()
 plot.xlabel('time in milli seconds')
 plot.ylabel('Velocity estimate error in mm/sec')
@@ -110,6 +112,7 @@ plot.figure()
 plot.plot(x1[:,0],'b-', label = 'Distance error between cars 1 and 2')
 plot.plot(del_x1,'g-',label = 'Actual distance between cars 1 and 2' )
 plot.title('Distance error & Actual distance 1&2')
+plot.grid(color='k', linestyle='-', linewidth=0.3)
 plot.legend()
 plot.xlabel('time in milli seconds')
 plot.ylabel('Distance in mm')
@@ -118,6 +121,7 @@ plot.figure()
 plot.plot(vcap1, 'b-', label = 'Velocity estimate')
 plot.plot(v2, 'r-', label = 'Input to vehicle 2')
 plot.title('Velocity estimate')
+plot.grid(color='k', linestyle='-', linewidth=0.3)
 plot.legend()
 plot.xlabel('time in milli seconds')
 plot.ylabel('Velocity estimate in mm/sec')
